@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "noImplicitAny": false,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "sourceMap": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist/",
+      "declaration": true,
+      "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    },
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "src/**/*.spec.ts",
+      "node_modules"
+    ],
+    // "files": [
+    //   "index.d.ts"
+    // ] 
+  }

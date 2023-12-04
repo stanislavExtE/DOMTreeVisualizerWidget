@@ -1,0 +1,13 @@
+{
+    "en": {
+        "title_Main": "DOM Tree",
+        "title_AskForRender": "Request to render DOM tree",
+        "text_AskForRender": "Please click the button if you wand to parse and visualize DOM tree.",
+        "button_RenderTree": "Render",
+        "button_RerenderTree": "Rerender",
+        "": ""
+    },
+    "ua": {
+        "title_Main": "DOM Дерево"
+    }
+}

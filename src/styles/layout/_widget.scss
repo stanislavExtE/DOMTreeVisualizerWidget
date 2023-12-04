@@ -1,0 +1,145 @@
+.widget {
+  font-family: $custom-font-family;
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  z-index: 100;
+  max-width: 50%;
+  height: 500px;
+  padding: 100px 0px 0;
+  background: lighten($col-6, 10%);
+
+  &__content{
+    overflow-y: auto;
+    height: 100%;
+    padding: 20px 10px;
+  }
+
+  &__controls-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    height: 100px;
+    padding: 20px 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &__depth-input {
+    flex: 1 1 auto;
+    height: 34px;
+    padding: 2px 10px;
+    margin-bottom: 10px;
+    border: 1px solid $col-8;
+  }
+
+    &__dropdown {
+        position: relative;
+        margin-bottom: 5px;
+        padding: 4px 10px;
+        border: 1px solid $col-2;
+    
+        & .widget__dropdown {
+          margin-left: 20px;
+        }
+       
+    
+        &-title {
+          cursor: pointer;
+          padding: 5px;
+          background-color: #ddd;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+        }
+      }
+      
+      
+      .parent-dropdown .child-dropdowns {
+        display: none;
+        position: absolute;
+        left: 100%;
+        top: 0;
+        margin-top: -1px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-top: none;
+        border-radius: 0 0 3px 3px;
+      }
+      
+      .parent-dropdown:hover .child-dropdowns {
+        display: block;
+      }
+      
+      .child-dropdowns .dropdown {
+        margin: 0;
+        border: none;
+      }
+      
+      
+      .controls-container {
+        background: #FF0000;
+      }
+    
+        
+    &__btn {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        font-family: $custom-font-family;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 15px;
+        letter-spacing: 0.02em;
+        width: 50%;
+        flex: 1 1 50%;
+        max-width: 204px;
+        min-height: 32px;
+        color: $tc-2;
+        background: $col-5;
+        border: 1px solid $col-5;
+        transition: $trs;
+
+        @include br-p(992px, min) {
+            &:hover {
+                background: darken($col-3, 10%);
+            }
+        }
+    
+        &_v-2 {
+            background: $col-7;
+            // color: $tc-1;
+            border-color: $col-7;
+    
+            @include br-p(992px, min) {
+                &:hover {
+                    // color: #fff;
+                    background: lighten($col-7, 10%);
+                    border-color: lighten($col-7, 10%);
+                }
+            }
+        }
+    }
+
+}
+
+.highlighted {
+  outline: 2px solid $col-8 !important;
+}
+
+
+
+
+@include br-p($xl) {}
+
+@include br-p($lg) {}
+
+@include br-p($md) {}
+
+@include br-p($sm) {}
+
+@include br-p($xs) {}
+
+@include br-p(419px) {}

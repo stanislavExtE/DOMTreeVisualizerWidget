@@ -1,0 +1,25 @@
+@keyframes loading-dots {
+    0%{
+      content: '';
+    }
+    25%{
+      content: '.';
+    }
+    50%{
+      content: '..';
+    }
+    75%{
+      content: '...';
+    }
+  }
+
+  @keyframes fade-in {
+    0%{
+      display: block;
+      opacity: 0;
+    }
+
+    to{
+      opacity: 1;
+    }
+  }
