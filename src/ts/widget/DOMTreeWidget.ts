@@ -7,7 +7,7 @@ import {
   TreeNode,
 } from "./Parser/Parser.types";
 import { WidgetUI } from "./UI/WidgetUI";
-import { LangOptions, WidgetUIOptions } from "./UI/WidgetUI.types";
+import { WidgetUIOptions } from "./UI/WidgetUI.types";
 
 export default class DOMTreeWidget {
   private rootElement: ParserRootElement;
@@ -17,8 +17,8 @@ export default class DOMTreeWidget {
 
   constructor(parserOptions: ParserOptions & WidgetUIOptions = {}) {
     this.parserOptions = parserOptions;
+
     this.rootElement = this.parserOptions.rootElement || document.body;
-    // this.parserOptions.lang = parserOptions.lang || {};
     const locale =
       checkValidLocale(Object.keys(translates), this.parserOptions?.lang?.locale) ||
       checkValidLocale(Object.keys(translates), navigator.language) ||
@@ -37,7 +37,7 @@ export default class DOMTreeWidget {
     this.parser = new Parser(this.rootElement);
     this.widgetUI = new WidgetUI({
         openTreeByDefault: this.parserOptions.openTreeByDefault || false,
-        shownWidgetByDefault: this.parserOptions.openTreeByDefault || true,
+        shownWidgetByDefault: this.parserOptions.shownWidgetByDefault === false ? false : true,
         lang: this.parserOptions.lang,
         highlightCallback: this.highlightElement.bind(this)
     });
@@ -60,7 +60,6 @@ export default class DOMTreeWidget {
       treeNode.isParent,
       treeNode.element
     );
-    console.log(treeNode, '---');
     
     dropdown.setAttribute("data-title", treeNode.tagName);
 
@@ -117,7 +116,7 @@ export default class DOMTreeWidget {
 
 
   init() {
-    // this.renderDropdowns();
     this.setupEventListeners(this.widgetUI);
   }
 }
+

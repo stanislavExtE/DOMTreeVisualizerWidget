@@ -11,7 +11,8 @@ export class Parser {
     element = this.rootElement,
     depth,
   }: { element?: Node; depth?: number | undefined } = {}): TreeNode {
-    if (!element) {
+    
+    if (!element || element instanceof Element && element.closest('#DOMTreeWidget') || (element as HTMLElement).tagName && (element as HTMLElement).tagName.toLowerCase() === 'script') {
       return null;
     }
 

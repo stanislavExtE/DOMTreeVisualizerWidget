@@ -11,16 +11,20 @@ export class WidgetUI {
   private updateButton: HTMLButtonElement;
   private resetButton: HTMLButtonElement;
   private messageContainer: HTMLElement;
+  private showButton: HTMLButtonElement;
+  private hideButton: HTMLButtonElement;
   private options: WidgetUIOptions & WidgetUIProps;
 
   constructor(options: WidgetUIOptions & WidgetUIProps) {
     this.options = options;
+
     this.createWidgetUI();
   }
 
   private createWidgetUI() {
     this.widgetContainer = document.createElement("div");
     this.widgetContainer.classList.add("widget");
+    this.widgetContainer.id = 'DOMTreeWidget';
     const widgetContent = document.createElement("div");
     widgetContent.classList.add("widget__content");
     this.controlsContainer = this.createControls();
@@ -35,8 +39,30 @@ export class WidgetUI {
     widgetContent.appendChild(this.tagsContainer);
     widgetContent.appendChild(this.messageContainer);
     widgetContent.appendChild(this.tagsContainer);
-
+    
     document.body.appendChild(this.widgetContainer);
+
+  }
+
+
+  private handleShowButtonClick() {
+    this.showWidget();
+  }
+
+  private handleHideButtonClick() {
+    this.hideWidget();
+  }
+
+  private hideWidget() {
+    this.widgetContainer.classList.add('widget-hidden');
+    this.showButton.style.display = 'block';
+    this.hideButton.style.display = 'none';
+  }
+
+  private showWidget() {
+    this.widgetContainer.classList.remove('widget-hidden');
+    this.showButton.style.display = 'none';
+    this.hideButton.style.display = 'block';
   }
 
   private createTagsContainer(): HTMLElement {
@@ -48,7 +74,6 @@ export class WidgetUI {
   private createControls(): HTMLElement {
     const controlsContainer = document.createElement("div");
     controlsContainer.classList.add("widget__controls-container");
-    // controlsContainer.classList.add('controls-container');
 
     this.depthInput = this.createInput({
       id: "widget__depth-input",
@@ -67,9 +92,29 @@ export class WidgetUI {
       className: "widget__btn widget__btn_v-2",
       clickHandler: this.handleResetClick.bind(this),
     });
+    this.showButton = this.createButton({
+      text: '',
+      id: 'widget__show-button',
+      className: 'widget__btn-show',
+      clickHandler: this.handleShowButtonClick.bind(this)
+    });
+
+    this.hideButton = this.createButton({
+      text: '',
+      id: 'widget__hide-button',
+      className: 'widget__btn-hide',
+      clickHandler: this.handleHideButtonClick.bind(this)
+    });
+
+    if (!this.options.shownWidgetByDefault) {
+      this.hideWidget();
+    }
+
     controlsContainer.appendChild(this.depthInput);
     controlsContainer.appendChild(this.updateButton);
     controlsContainer.appendChild(this.resetButton);
+    controlsContainer.appendChild(this.hideButton);
+    document.body.appendChild(this.showButton);
 
     return controlsContainer;
   }
@@ -86,7 +131,7 @@ export class WidgetUI {
     const input = document.createElement("input");
     input.setAttribute("type", "number");
     if (name) input.setAttribute("name", name);
-    input.setAttribute("placeholder", "Depth(leave empty for removeing)");
+    input.setAttribute("placeholder", this.options.lang.translates.depthInputPlaceholder);
     input.id = id;
     if (className) input.className = className;
     return input;
@@ -100,15 +145,6 @@ export class WidgetUI {
     messageText.classList.add("widget__message__text");
     messageText.textContent = message;
     messageContainer.appendChild(messageText);
-
-    // const parseButton = this.createButton({
-    //   text: "Parse",
-    //   id: "widget__parse-button",
-    //   className: "widget__btn",
-    //   clickHandler: this.handleParseClick.bind(this),
-    // });
-
-    // messageContainer.appendChild(parseButton);
 
     return messageContainer;
   }
@@ -203,7 +239,6 @@ export class WidgetUI {
       titleNavigation.appendChild(titleDropdownButton);
     }
 
-    // if (isParent) {
     titleText.addEventListener("click", (e) => {
       this.options.highlightCallback(element);
 

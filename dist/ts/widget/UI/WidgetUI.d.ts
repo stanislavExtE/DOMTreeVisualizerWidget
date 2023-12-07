@@ -1,0 +1,34 @@
+import { WidgetUIOptions, WidgetUIProps } from "./WidgetUI.types";
+export declare class WidgetUI {
+    widgetContainer: HTMLElement;
+    controlsContainer: HTMLElement;
+    tagsContainer: HTMLElement;
+    private depthInput;
+    private langOptions;
+    private updateButton;
+    private resetButton;
+    private messageContainer;
+    private showButton;
+    private hideButton;
+    private options;
+    constructor(options: WidgetUIOptions & WidgetUIProps);
+    private createWidgetUI;
+    private handleShowButtonClick;
+    private handleHideButtonClick;
+    private hideWidget;
+    private showWidget;
+    private createTagsContainer;
+    private createControls;
+    private createInput;
+    private createMessageWindow;
+    removeMessageWidnow(): void;
+    private createButton;
+    private handleUpdateClick;
+    private handleParseClick;
+    private handleResetClick;
+    private dispatchEvent;
+    addDropdown(isParent: boolean, element: HTMLElement): HTMLElement;
+    private highlightTitle;
+    private scrollToParsedElement;
+    clearDropdowns(): void;
+}

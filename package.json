@@ -1,7 +1,8 @@
 {
-  "name": "myapp",
+  "name": "DOMTreeWidget",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/widget.min.js",
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production"
