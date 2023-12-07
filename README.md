@@ -63,7 +63,7 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 | **lang.translates.parseButton:**| (Optional) A key with translation of parse button.        |
 | **lang.translates.resetButton:**| (Optional) A key with translation of reset button.       |
 | **lang.translates.instructionMessage:**| (Optional) A key with translation of intro message.       |
-| **lang.translates.depthInputPlaceholder:**| (Optional) A key with translation if input placeholder.       | 
+| **lang.translates.depthInputPlaceholder:**| (Optional) A key with translation of input placeholder.       | 
 
 
 **Methods**
