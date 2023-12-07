@@ -1,4 +1,4 @@
-### DOM Tree Widget
+# DOM Tree Widget
 
 The DOM Tree Widget is a JavaScript-based widget that allows users to visualize the DOM structure of a web page in a hierarchical tree format. It provides a user interface to interactively explore and navigate the DOM tree.
 
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 ## Classes
 
-# WidgetUI
+### WidgetUI
 
 The WidgetUI class represents the user interface of the DOM Tree Widget. It provides methods to create and manipulate the widget's components, such as buttons, input fields, and the hierarchical tree view.
 
@@ -80,7 +80,7 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 **clearDropdowns():** Clears all dropdown elements from the widget.
 
 
-# Parser
+### Parser
 
 The Parser class is responsible for parsing the DOM tree structure and generating a hierarchical tree of TreeNode objects.
 
@@ -93,7 +93,7 @@ The Parser class is responsible for parsing the DOM tree structure and generatin
 **getParsedDOMTree({ element, depth }):** Recursively parses the DOM tree starting from the specified element with a specified depth.
 
 
-# DOMTreeWidget
+### DOMTreeWidget
 
 The DOMTreeWidget class acts as the main controller for the DOM Tree Widget. It orchestrates the interaction between the Parser and WidgetUI classes.
 
