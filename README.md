@@ -60,7 +60,6 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 | **lang: (Optional)** | An object specifying localization options.
 | **locale: (Optional)** | String representing the desired language locale.
 | **translates: (Optional)** | An object with translation key-value pairs.
-```
 
 **Methods**
 
