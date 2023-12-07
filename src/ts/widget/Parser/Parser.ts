@@ -40,7 +40,6 @@ export class Parser {
 
     for (const child of element.childNodes) {
      
-      
       const parsedChild = this.getParsedDOMTree({
         element: child,
         depth: remainingDepth,

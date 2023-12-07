@@ -1,3 +1,5 @@
+import { translates } from "../../lang/translates";
+import { checkValidLocale } from "../helpers/helpers";
 import { Parser } from "./Parser/Parser";
 import {
   ParserOptions,
@@ -5,17 +7,38 @@ import {
   TreeNode,
 } from "./Parser/Parser.types";
 import { WidgetUI } from "./UI/WidgetUI";
-import { WidgetUIOptions } from "./UI/WidgetUI.types";
+import { LangOptions, WidgetUIOptions } from "./UI/WidgetUI.types";
 
 export default class DOMTreeWidget {
   private rootElement: ParserRootElement;
   private parser: Parser;
   private widgetUI: WidgetUI;
+  private parserOptions: ParserOptions & WidgetUIOptions;
 
   constructor(parserOptions: ParserOptions & WidgetUIOptions = {}) {
-    this.rootElement = parserOptions.rootElement || document.body;
+    this.parserOptions = parserOptions;
+    this.rootElement = this.parserOptions.rootElement || document.body;
+    // this.parserOptions.lang = parserOptions.lang || {};
+    const locale =
+      checkValidLocale(Object.keys(translates), this.parserOptions?.lang?.locale) ||
+      checkValidLocale(Object.keys(translates), navigator.language) ||
+      checkValidLocale(
+        Object.keys(translates),
+        (document.documentElement.lang || "").toLowerCase()
+      ) ||
+      "en";
+    const translations = translates[locale];
+    const userTranslations = this.parserOptions?.lang?.translates || {};
+    this.parserOptions.lang = {
+      locale: locale,
+      translates: { ...translations, ...userTranslations },
+    }
+    
     this.parser = new Parser(this.rootElement);
     this.widgetUI = new WidgetUI({
+        openTreeByDefault: this.parserOptions.openTreeByDefault || false,
+        shownWidgetByDefault: this.parserOptions.openTreeByDefault || true,
+        lang: this.parserOptions.lang,
         highlightCallback: this.highlightElement.bind(this)
     });
 
@@ -34,15 +57,19 @@ export default class DOMTreeWidget {
     parentDropdown: HTMLElement | null = null
   ) {
     const dropdown = widgetUI.addDropdown(
-      treeNode.tagName,
       treeNode.isParent,
       treeNode.element
     );
+    console.log(treeNode, '---');
+    
     dropdown.setAttribute("data-title", treeNode.tagName);
 
     const dropdownContent = document.createElement("div");
-    dropdownContent.classList.add("widget__dropdown__content");
-    dropdown.appendChild(dropdownContent);
+    dropdownContent.classList.add("widget__dropdown-content");
+    const dropdownContentWrapper = document.createElement("div");
+    dropdownContentWrapper.classList.add("widget__dropdown-content-wrapper");
+    dropdownContentWrapper.appendChild(dropdownContent);
+    dropdown.appendChild(dropdownContentWrapper);
 
     if (parentDropdown) {
       parentDropdown.appendChild(dropdown);
@@ -61,6 +88,13 @@ export default class DOMTreeWidget {
     document.addEventListener("updateDepth", (event: CustomEvent<number>) => {
       widgetUI.clearDropdowns();
       this.renderDropdowns({ depth: event.detail });
+      widgetUI.removeMessageWidnow()
+    });
+
+    document.addEventListener("parseDOM", (event: CustomEvent<number>) => {
+      widgetUI.clearDropdowns();
+      this.renderDropdowns({ depth: this.parserOptions.depth });
+      widgetUI.removeMessageWidnow()
     });
 
     document.addEventListener("resetDepth", () => {
@@ -71,15 +105,19 @@ export default class DOMTreeWidget {
 
   private highlightElement(element: HTMLElement | null) {
     const highlightedElements = document.querySelectorAll(".highlighted");
-    highlightedElements.forEach((el) => el.classList.remove("highlighted"));
+    highlightedElements.forEach((el) => {
+      if (el !== element)
+      el.classList.remove("highlighted")
+    });
 
     if (element) {
-      element.classList.add("highlighted");
+      element.classList.toggle("highlighted");
     }
   }
 
+
   init() {
-    this.renderDropdowns();
+    // this.renderDropdowns();
     this.setupEventListeners(this.widgetUI);
   }
 }

@@ -1,16 +1,20 @@
-import { WidgetUIOptions, WidgetUIProps } from "./WidgetUI.types";
+import { translates } from "../../../lang/translates";
+import { checkValidLocale } from "../../helpers/helpers";
+import { LangOptions, WidgetUIOptions, WidgetUIProps } from "./WidgetUI.types";
 
 export class WidgetUI {
   public widgetContainer: HTMLElement;
   public controlsContainer: HTMLElement;
   public tagsContainer: HTMLElement;
-  private highlightCallback: (element: HTMLElement) => void;
   private depthInput: HTMLInputElement;
+  private langOptions: LangOptions;
   private updateButton: HTMLButtonElement;
   private resetButton: HTMLButtonElement;
+  private messageContainer: HTMLElement;
+  private options: WidgetUIOptions & WidgetUIProps;
 
   constructor(options: WidgetUIOptions & WidgetUIProps) {
-    this.highlightCallback = options.highlightCallback;
+    this.options = options;
     this.createWidgetUI();
   }
 
@@ -22,8 +26,14 @@ export class WidgetUI {
     this.controlsContainer = this.createControls();
     this.tagsContainer = this.createTagsContainer();
 
+    this.messageContainer = this.createMessageWindow(
+      this.options.lang.translates.instructionMessage
+    );
+
     this.widgetContainer.appendChild(widgetContent);
     widgetContent.appendChild(this.controlsContainer);
+    widgetContent.appendChild(this.tagsContainer);
+    widgetContent.appendChild(this.messageContainer);
     widgetContent.appendChild(this.tagsContainer);
 
     document.body.appendChild(this.widgetContainer);
@@ -41,18 +51,18 @@ export class WidgetUI {
     // controlsContainer.classList.add('controls-container');
 
     this.depthInput = this.createInput({
-        id: "widget__depth-input",
-        name: "widget__depth-input",
-        className: "widget__depth-input",
+      id: "widget__depth-input",
+      name: "widget__depth-input",
+      className: "widget__depth-input",
     });
     this.updateButton = this.createButton({
-      text: "Update",
+      text: this.options.lang.translates.parseButton,
       id: "widget__update-button",
       className: "widget__btn",
       clickHandler: this.handleUpdateClick.bind(this),
     });
     this.resetButton = this.createButton({
-      text: "Reset",
+      text: this.options.lang.translates.resetButton,
       id: "widget__reset-button",
       className: "widget__btn widget__btn_v-2",
       clickHandler: this.handleResetClick.bind(this),
@@ -76,10 +86,38 @@ export class WidgetUI {
     const input = document.createElement("input");
     input.setAttribute("type", "number");
     if (name) input.setAttribute("name", name);
-    input.setAttribute("placeholder", "Depth");
+    input.setAttribute("placeholder", "Depth(leave empty for removeing)");
     input.id = id;
     if (className) input.className = className;
     return input;
+  }
+
+  private createMessageWindow(message: string) {
+    const messageContainer = document.createElement("div");
+    messageContainer.classList.add("widget__message");
+
+    const messageText = document.createElement("div");
+    messageText.classList.add("widget__message__text");
+    messageText.textContent = message;
+    messageContainer.appendChild(messageText);
+
+    // const parseButton = this.createButton({
+    //   text: "Parse",
+    //   id: "widget__parse-button",
+    //   className: "widget__btn",
+    //   clickHandler: this.handleParseClick.bind(this),
+    // });
+
+    // messageContainer.appendChild(parseButton);
+
+    return messageContainer;
+  }
+
+  public removeMessageWidnow() {
+    if (this.messageContainer) {
+      this.messageContainer.remove();
+      this.messageContainer = undefined;
+    }
   }
 
   private createButton({
@@ -103,14 +141,19 @@ export class WidgetUI {
 
   private handleUpdateClick() {
     const newDepth = parseInt(this.depthInput.value, 10);
-    if (!isNaN(newDepth)) {
-      this.highlightCallback(null);
-      this.dispatchEvent("updateDepth", newDepth);
-    }
+    // if (!isNaN(newDepth)) {
+    this.options.highlightCallback(null);
+    this.dispatchEvent("updateDepth", newDepth);
+    // }
+  }
+
+  private handleParseClick() {
+    this.options.highlightCallback(null);
+    this.dispatchEvent("parseDOM");
   }
 
   private handleResetClick() {
-    this.highlightCallback(null);
+    this.options.highlightCallback(null);
     this.depthInput.value = undefined;
     this.dispatchEvent("resetDepth");
   }
@@ -120,31 +163,80 @@ export class WidgetUI {
     document.dispatchEvent(event);
   }
 
-  public addDropdown(
-    title: string,
-    isParent: boolean,
-    element: HTMLElement
-  ): HTMLElement {
+  public addDropdown(isParent: boolean, element: HTMLElement): HTMLElement {
     const dropdown = document.createElement("div");
     dropdown.classList.add("widget__dropdown");
-
+    if (this.options.openTreeByDefault) {
+      dropdown.classList.add("opened");
+    }
     const titleElement = document.createElement("div");
-    titleElement.classList.add("widget__dropdown__title");
-    titleElement.textContent = title;
+    titleElement.classList.add("widget__dropdown-title");
+    dropdown.appendChild(titleElement);
+    const titleText = document.createElement("div");
+    titleText.classList.add("widget__dropdown-title__text");
+    const title = `${element.tagName.toLocaleLowerCase()}${
+      element.id ? "#" + element.id : ""
+    }${element.className ? "." + element.className : ""}`;
+    titleText.textContent = title;
+    titleElement.appendChild(titleText);
+
+    const titleNavigation = document.createElement("div");
+    titleNavigation.classList.add("widget__dropdown-title__navigation");
+    titleElement.appendChild(titleNavigation);
+
+    const titleAnchorButton = document.createElement("div");
+    titleAnchorButton.classList.add("widget__dropdown-title__anchor-icon");
+    titleNavigation.appendChild(titleAnchorButton);
+
+    titleAnchorButton.addEventListener("click", () => {
+      this.scrollToParsedElement(element);
+    });
+
+    if (isParent) {
+      const titleDropdownButton = document.createElement("div");
+      titleDropdownButton.classList.add("widget__dropdown-title__caret-icon");
+
+      titleDropdownButton.addEventListener("click", () => {
+        dropdown.classList.toggle("opened");
+      });
+
+      titleNavigation.appendChild(titleDropdownButton);
+    }
 
     // if (isParent) {
-    titleElement.addEventListener("click", () =>
-      this.highlightCallback(element)
-    );
-    titleElement.addEventListener("mouseout", () =>
-      this.highlightCallback(null)
-    );
-    // }
+    titleText.addEventListener("click", (e) => {
+      this.options.highlightCallback(element);
 
-    dropdown.appendChild(titleElement);
+      this.highlightTitle(titleText);
+    });
+
     this.tagsContainer.appendChild(dropdown);
 
     return dropdown;
+  }
+
+  private highlightTitle(titleText: HTMLElement) {
+    const allTitleTextElements = document.querySelectorAll(
+      ".widget__dropdown-title__text.active"
+    );
+    allTitleTextElements.forEach((title) => {
+      if (title !== titleText) {
+        title.classList.remove("active");
+      }
+    });
+    titleText.classList.toggle("active");
+  }
+
+  private scrollToParsedElement(element: HTMLElement) {
+    const parsedElement = element;
+
+    if (parsedElement) {
+      const offsetTop = parsedElement.offsetTop;
+      window.scrollTo({
+        top: offsetTop,
+        behavior: "smooth",
+      });
+    }
   }
 
   public clearDropdowns() {

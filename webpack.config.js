@@ -34,6 +34,20 @@ module.exports = {
           },
         ],
       },
+      {
+        // Load all images as base64 encoding if they are smaller than 8192 bytes
+        test: /\.(png|jpg|gif|obj|fbx|mtl|gltf|glb|dae|3ds|woff|woff2|eot|ttf|svg|stl)$/,
+        use: [
+            {
+                loader: 'url-loader',
+                options: {
+                    // On development we want to see where the file is coming from, hence we preserve the [path]
+                    name: '[path][name].[ext]?hash=[hash:20]',
+                    limit: 8192
+                }
+            }
+        ]
+    }
     ],
   },
   plugins: [
