@@ -54,14 +54,6 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 
 **Parameters**
 
-| **options:** | An object containing configuration options for the widget. |
-| **openTreeByDefault:** | (Optional) Boolean indicating whether the tree should be open by default. |
-| **shownWidgetByDefault:** | (Optional) Boolean indicating whether the widget should be visible by default. |
-| **lang: (Optional)** | An object specifying localization options. |
-| **locale: (Optional)** | String representing the desired language locale. |
-| **translates: (Optional)** | An object with translation key-value pairs. |
-
-
 | **Parameter:**            | Description                    |
 |-------------------------|----------------------------------------------------------------------------------|
 | **options:**            | An object containing configuration options for the widget.                     |
@@ -73,21 +65,23 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 
 **Methods**
 
-**createWidgetUI():** Creates the main structure of the widget.
-**createTagsContainer():** Creates the container for displaying tags in the widget.
-**createControls():** Creates the control buttons for the widget.
-**createInput({ id, className, name }):** Creates an input element with specified attributes.
-**createMessageWindow(message):** Creates a message window with the provided message.
-**removeMessageWindow():** Removes the message window from the widget.
-**createButton({ text, id, className, clickHandler }):** HTMLButtonElement: Creates a button with specified attributes.
-**handleUpdateClick():** Event handler for the "Update" button click.
-**handleParseClick():** Event handler for the "Parse" button click.
-**handleResetClick():** Event handler for the "Reset" button click.
-**dispatchEvent(eventName, payload):** Dispatches a custom event with the specified name and payload.
-**addDropdown(isParent, element):** Adds a dropdown element to the widget.
-**highlightTitle(titleText):** Highlights the selected title in the widget.
-**scrollToParsedElement(element):** Scrolls the page to the specified parsed element.
-**clearDropdowns():** Clears all dropdown elements from the widget.
+| **Method**                        | **Description**                                                           |
+|--------------------------------------|---------------------------------------------------------------------------|
+| **createWidgetUI():**                 | Creates the main structure of the widget.                                 |
+| **createTagsContainer():**            | Creates the container for displaying tags in the widget.                 |
+| **createControls():**                 | Creates the control buttons for the widget.                              |
+| **createInput({ id, className, name }):**| Creates an input element with specified attributes.                   |
+| **createMessageWindow(message):**    | Creates a message window with the provided message.                     |
+| **removeMessageWindow():**            | Removes the message window from the widget.                               |
+| **createButton({ text, id, className, clickHandler }):**| Creates a button with specified attributes.                |
+| **handleUpdateClick():**              | Event handler for the "Update" button click.                              |
+| **handleParseClick():**               | Event handler for the "Parse" button click.                               |
+| **handleResetClick():**               | Event handler for the "Reset" button click.                               |
+| **dispatchEvent(eventName, payload):**| Dispatches a custom event with the specified name and payload.           |
+| **addDropdown(isParent, element):**   | Adds a dropdown element to the widget.                                    |
+| **highlightTitle(titleText):**        | Highlights the selected title in the widget.                              |
+| **scrollToParsedElement(element):**   | Scrolls the page to the specified parsed element.                        |
+| **clearDropdowns():**                 | Clears all dropdown elements from the widget.                             |
 
 
 ### Parser
@@ -96,11 +90,15 @@ The Parser class is responsible for parsing the DOM tree structure and generatin
 
 **Parameters** 
 
-**rootElement:** The root HTML element from which to start parsing the DOM tree.
+| **Parameter**   | **Description**                                              |
+|------------------|--------------------------------------------------------------|
+| **rootElement:** | The root HTML element from which to start parsing the DOM tree.|
 
 **Methods**
 
-**getParsedDOMTree({ element, depth }):** Recursively parses the DOM tree starting from the specified element with a specified depth.
+| **Method**                          | **Description**                                                    |
+|---------------------------------------|--------------------------------------------------------------------|
+| **getParsedDOMTree({ element, depth })** | Recursively parses the DOM tree starting from the specified element with a specified depth.|
 
 
 ### DOMTreeWidget
@@ -109,17 +107,21 @@ The DOMTreeWidget class acts as the main controller for the DOM Tree Widget. It 
 
 **Parameters**
 
-**parserOptions:** An object containing configuration options for the widget and parser.
-**rootElement: (Optional)** The root HTML element for parsing the DOM tree.
-**openTreeByDefault: (Optional)** Boolean indicating whether the tree should be open by default.
-**lang: (Optional)** An object specifying localization options.
-**locale: (Optional)** String representing the desired language locale.
-**translates: (Optional)** An object with translation key-value pairs.
+| **Parameter**       | **Description**                                               |
+|----------------------|---------------------------------------------------------------|
+| **parserOptions:**   | An object containing configuration options for the widget and parser.|
+| **rootElement:**     | (Optional) The root HTML element for parsing the DOM tree.     |
+| **openTreeByDefault:**| (Optional) Boolean indicating whether the tree should be open by default.|
+| **lang:**            | (Optional) An object specifying localization options.          |
+| **locale:**          | (Optional) String representing the desired language locale.    |
+| **translates:**      | (Optional) An object with translation key-value pairs.         |
 
 **Methods**
 
-**renderDropdowns(options):** Renders the dropdown elements in the widget based on the parsed DOM tree.
-**renderNode(widgetUI, treeNode, parentDropdown):** Recursively renders a tree node in the widget.
-**setupEventListeners(widgetUI):** Sets up event listeners for custom events triggered by the widget.
-**highlightElement(element):** Highlights the specified HTML element.
-**init():** Initializes the DOM Tree Widget by rendering the initial dropdowns and setting up event listeners.
+| **Method**                                          | **Description**                                                          |
+|-----------------------------------------------------|--------------------------------------------------------------------------|
+| **renderDropdowns(options):**                       | Renders the dropdown elements in the widget based on the parsed DOM tree.|
+| **renderNode(widgetUI, treeNode, parentDropdown):** | Recursively renders a tree node in the widget.                           |
+| **setupEventListeners(widgetUI):**                  | Sets up event listeners for custom events triggered by the widget.       |
+| **highlightElement(element):**                      | Highlights the specified HTML element.                                   |
+| **init():**                                         | Initializes the DOM Tree Widget by rendering the initial dropdowns and setting up event listeners.|
