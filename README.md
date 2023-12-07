@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 ```
 
+
 ## Classes
 
 ### WidgetUI
@@ -84,6 +85,7 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 | **clearDropdowns():**                 | Clears all dropdown elements from the widget.                             |
 
 
+
 ### Parser
 
 The Parser class is responsible for parsing the DOM tree structure and generating a hierarchical tree of TreeNode objects.
@@ -99,6 +101,7 @@ The Parser class is responsible for parsing the DOM tree structure and generatin
 | **Method**                          | **Description**                                                    |
 |---------------------------------------|--------------------------------------------------------------------|
 | **getParsedDOMTree({ element, depth })** | Recursively parses the DOM tree starting from the specified element with a specified depth.|
+
 
 
 ### DOMTreeWidget
