@@ -57,9 +57,9 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 | **options:**            | An object containing configuration options for the widget.                     |
 | **openTreeByDefault:**   | (Optional) Boolean indicating whether the tree should be open by default.       |
 | **shownWidgetByDefault:**| (Optional) Boolean indicating whether the widget should be visible by default.   |
-| **lang:**     | (Optional) An object specifying localization options.                                       |
-| **lang.locale:**   | (Optional) String representing the desired language locale.                                 |
-| **lang.translates:**| (Optional) An object with translation key-value pairs.                                      |
+| **lang:**     | (Optional) An object specifying localization options(Default only for 'en' and 'ua').     |
+| **lang.locale:**   | (Optional) String representing the desired language locale.      |
+| **lang.translates:**| (Optional) An object with translation key-value pairs. You are free to replace each default text in UI.       |
 
 **Methods**
 
