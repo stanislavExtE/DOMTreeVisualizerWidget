@@ -11,10 +11,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     umdNamedDefine: true,
     libraryTarget: 'umd',
-    library: 'TestW',
+    library: 'DOMTreeWidget',
     globalObject: `(typeof self !== 'undefined' ? self : this)`,
     library: {
-      name: "TestW",
+      name: "DOMTreeWidget",
       type: "umd",  
       export: "default", 
     },

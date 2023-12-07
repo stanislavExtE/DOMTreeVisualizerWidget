@@ -13,14 +13,10 @@ The DOM Tree Widget is a JavaScript-based widget that allows users to visualize 
 
 ## Installation
 
-Include the necessary JavaScript and stylesheet files in your project to use the DOM Tree Widget.
-<!-- 
-```html
-<!-- Include the main stylesheet -->
-<link rel="stylesheet" href="path/to/main.css">
+Include widget.min.js file in your project to use the DOM Tree Widget.
 
 <!-- Include the JavaScript files -->
-<script src="path/to/main.js"></script> -->
+<script src="widget.min.js"></script> -->
 
 
 ## Usage
@@ -32,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const main = document.querySelector('.main');
   const widget = new DOMTreeWidget({
     rootElement: main as HTMLElement,
-    openTreeByDefault: true,
+    openTreeByDefault: false,
+    shownWidgetByDefault: true,
     lang: {
       locale: 'en',
       translates: {
@@ -60,9 +57,9 @@ The WidgetUI class represents the user interface of the DOM Tree Widget. It prov
 | **options:**            | An object containing configuration options for the widget.                     |
 | **openTreeByDefault:**   | (Optional) Boolean indicating whether the tree should be open by default.       |
 | **shownWidgetByDefault:**| (Optional) Boolean indicating whether the widget should be visible by default.   |
-| **lang: (Optional)**     | An object specifying localization options.                                       |
-| **locale: (Optional)**   | String representing the desired language locale.                                 |
-| **translates: (Optional)**| An object with translation key-value pairs.                                      |
+| **lang:**     | (Optional) An object specifying localization options.                                       |
+| **lang.locale:**   | (Optional) String representing the desired language locale.                                 |
+| **lang.translates:**| (Optional) An object with translation key-value pairs.                                      |
 
 **Methods**
 
@@ -116,8 +113,8 @@ The DOMTreeWidget class acts as the main controller for the DOM Tree Widget. It 
 | **rootElement:**     | (Optional) The root HTML element for parsing the DOM tree.     |
 | **openTreeByDefault:**| (Optional) Boolean indicating whether the tree should be open by default.|
 | **lang:**            | (Optional) An object specifying localization options.          |
-| **locale:**          | (Optional) String representing the desired language locale.    |
-| **translates:**      | (Optional) An object with translation key-value pairs.         |
+| **lang.locale:**          | (Optional) String representing the desired language locale.    |
+| **lang.translates:**      | (Optional) An object with translation key-value pairs.         |
 
 **Methods**
 
