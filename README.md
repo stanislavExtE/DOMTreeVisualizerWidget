@@ -13,7 +13,7 @@ The DOM Tree Widget is a JavaScript-based widget that allows users to visualize 
 
 ## Installation
 
-Include widget.min.js file in your project to use the DOM Tree Widget.
+Include widget.min.js file in your project to use the DOM Tree Widget(you can find it in /dist folder in repo).
 
 <!-- Include the JavaScript files -->
 <script src="widget.min.js"></script> -->
